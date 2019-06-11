@@ -2,6 +2,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackplugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -35,10 +36,10 @@ module.exports = {
         ]
       },
       {
-        test: /\.(jpg|png|gif|jpeg)$/,
+        test: /.(png|jpg|gif|jpeg)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
               limit: 10240
             }
@@ -59,6 +60,20 @@ module.exports = {
     ]
   },
   plugins: [
+    new HtmlWebpackplugin({
+      template: path.join(__dirname, 'src/seach.html'),
+      filename: 'seach.html',
+      chunks:['main'],
+      inject: true,
+      minify: {
+        html5: true,
+        collapseWhitespace: true,
+        preserveLineBreaks: false,
+        minifyCSS: true,
+        minifyJS: true,
+        removeComments: false
+      }
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
