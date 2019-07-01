@@ -1,13 +1,11 @@
 'use strict'
 
-const path = require('path')
+const path = require('path');
 const webpack = require('webpack')
-const HtmlWebpackplugin = require('html-webpack-plugin')
-
 module.exports = {
   entry: {
     index: './src/index.js',
-    main: './src/main.js'
+    search: './src/search.js'
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -19,27 +17,27 @@ module.exports = {
       {
         test: /\.js$/,
         use: 'babel-loader'
-      }, 
+      },
       {
         test: /\.css$/,
         use: [
           'style-loader',
           'css-loader'
         ]
-      }, 
+      },
       {
-        test: /\.less$/,
+        test: /\.(scss|sass)$/,
         use: [
           'style-loader',
           'css-loader',
-          'less-loader'
+          'sass-loader'
         ]
       },
       {
-        test: /.(png|jpg|gif|jpeg)$/,
+        test: /\.(png|jpg|jpeg|gif|svg)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: 'url-loader',
             options: {
               limit: 10240
             }
@@ -49,32 +47,13 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 10240
-            }
-          }
+          'file-loader'
         ]
       }
     ]
   },
   plugins: [
-    new HtmlWebpackplugin({
-      template: path.join(__dirname, 'src/seach.html'),
-      filename: 'seach.html',
-      chunks:['main'],
-      inject: true,
-      minify: {
-        html5: true,
-        collapseWhitespace: true,
-        preserveLineBreaks: false,
-        minifyCSS: true,
-        minifyJS: true,
-        removeComments: false
-      }
-    }),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
     contentBase: './dist',
