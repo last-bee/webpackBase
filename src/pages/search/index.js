@@ -3,10 +3,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import meinv from './images/meinv.jpg'
-import './search.css'
-import './search.scss'
-class Search extends React.Component {
+import './index.css'
+import './index.scss'
 
+class Search extends React.Component {
   render() {
     return <div className="search-text">
       搜索文字的内容
@@ -16,6 +16,6 @@ class Search extends React.Component {
 }
 
 ReactDOM.render(
-    <Search />,
-    document.getElementById('root')
+  <Search />,
+  document.getElementById('root')
 );
