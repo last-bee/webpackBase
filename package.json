@@ -41,6 +41,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "lastbee-add-number": "^1.0.0",
     "lib-flexible": "^0.3.2"
   }
 }
