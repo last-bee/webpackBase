@@ -3,10 +3,10 @@
 import './index.scss'
 import React from 'react'
 import ReactDOM from 'react-dom'
-
+import { common } from '../../common/common.js'
 class Text extends React.Component {
   render() {
-    return <div>text</div>
+    return <div>text{common()}</div>
   }
 }
 

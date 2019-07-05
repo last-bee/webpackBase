@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const setMPA = () => {
   const entry = {}
   const htmlWebpackPlugins = []
@@ -21,7 +22,7 @@ const setMPA = () => {
           inlineSource: '.css$',
           template: path.join(__dirname, `src/pages/${pageName}/index.html`),
           filename: `${pageName}.html`,
-          chunks: ['vendors', pageName],
+          chunks: ['commons', pageName],
           inject: true,
           minify: {
             html5: true,
@@ -118,6 +119,34 @@ module.exports = {
     new OptimizeCSSAssetsPlugin({
       assetNameRegExp: /.css$/,
       cssProcessor: require('cssnano')
+    }),
+    new HtmlWebpackExternalsPlugin({
+      externals: [
+        {
+          module: 'react',
+          entry: 'https://unpkg.com/react@16/umd/react.production.min.js',
+          global: 'React',
+        },
+        {
+          module: 'react-dom',
+          entry: 'https://unpkg.com/react-dom@16/umd/react-dom.production.min.js',
+          global: 'ReactDOM',
+        },
+      ],
     })
   ].concat(htmlWebpackPlugins),
+  optimization: {
+    splitChunks: {
+      minSize: 0,
+      cacheGroups: {
+        commons: {
+          // test: /(react|react-dom)/,
+          name: 'commons',
+          chunks: 'all',
+          minChunks: 1
+        }
+      }
+    }
+  },
+  // devtool: 'source-map'
 }
